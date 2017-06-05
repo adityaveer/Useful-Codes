@@ -1,0 +1,19 @@
+int freq(int arr[],int n,int f[])
+{
+	int i,temp=arr[0],c=0;
+    f[0]=1;
+	for(i=1;i<n;i++)
+	{
+		if(arr[i]==temp)
+		{
+			f[c]++;
+		}
+        else
+        {
+            temp=arr[i];
+            c++;
+            f[c]=1;
+        }
+	}
+	return c;
+}

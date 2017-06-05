@@ -1,0 +1,73 @@
+int b[100000][5];
+void merge(int q[][5],int l, int mid, int h,int p,int flag)
+{
+    int i=l,j=mid+1,k=l;
+    while(i<=mid && j<=h)
+    {
+        if(q[i][p]>q[j][p])
+        {
+            b[k][0]=q[j][0];
+            b[k][1]=q[j][1];
+            b[k][2]=q[j][2];
+        	  b[k][3]=q[j][3];
+        	  if(flag==1)
+        		  b[k][4]=q[j][4];	
+            k++;
+            j++;
+        }
+        else
+        {
+            b[k][0]=q[i][0];
+            b[k][1]=q[i][1];
+            b[k][2]=q[i][2];
+        	b[k][3]=q[i][3];
+        	if(flag==1)
+        		b[k][4]=q[i][4];
+            k++;
+            i++;
+        }
+    }
+    while(i<=mid)
+    {
+        b[k][0]=q[i][0];
+        b[k][1]=q[i][1];
+        b[k][2]=q[i][2];
+    	b[k][3]=q[i][3];
+    	if(flag==1)
+    		b[k][4]=q[i][4];
+        k++;
+        i++;
+    }
+    while(j<=h)
+    {
+        b[k][0]=q[j][0];
+        b[k][1]=q[j][1];
+        b[k][2]=q[j][2];
+    	b[k][3]=q[j][3];
+    	if(flag==1)
+    		b[k][4]=q[j][4];
+        k++;
+        j++;
+    }
+    for(i=l;i<=h;i++)
+    {
+        q[i][0]=b[i][0];
+        q[i][1]=b[i][1];
+        q[i][2]=b[i][2];
+    	q[i][3]=b[i][3];
+    	if(flag==1)
+    		q[i][4]=b[i][4];
+    }
+}
+
+
+void mergesort(int q[][5],int l, int h,int p,int flag)
+{
+    if(l<h)
+    {
+        int mid=(l+h)/2;
+        mergesort(q,l,mid,p,flag);
+        mergesort(q,mid+1,h,p,flag);
+        merge(q,l,mid,h,p,flag);
+    }
+}

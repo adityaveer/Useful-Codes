@@ -1,0 +1,54 @@
+int czx[100000][2];
+
+void merge(int q[][2],int l, int mid, int h,int p)
+{
+    int i=l,j=mid+1,k=l;
+    while(i<=mid && j<=h)
+    {
+        if(q[i][p]<q[j][p])
+        {
+            czx[k][0]=q[j][0];
+            czx[k][1]=q[j][1];	
+            k++;
+            j++;
+        }
+        else
+        {
+            czx[k][0]=q[i][0];
+            czx[k][1]=q[i][1];
+            k++;
+            i++;
+        }
+    }
+    while(i<=mid)
+    {
+        czx[k][0]=q[i][0];
+        czx[k][1]=q[i][1];
+        k++;
+        i++;
+    }
+    while(j<=h)
+    {
+        czx[k][0]=q[j][0];
+        czx[k][1]=q[j][1];
+        k++;
+        j++;
+    }
+    for(i=l;i<=h;i++)
+    {
+        q[i][0]=czx[i][0];
+        q[i][1]=czx[i][1];
+    }
+}
+
+
+void mergesort(int q[][2],int l, int h,int p)
+{
+    if(l<h)
+    {
+        int mid=(l+h)/2;
+        mergesort(q,l,mid,p);
+        mergesort(q,mid+1,h,p);
+        merge(q,l,mid,h,p);
+    }
+}

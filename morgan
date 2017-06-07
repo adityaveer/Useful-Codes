@@ -1,0 +1,78 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+char* Find(char*,char*);
+
+    int main() {
+    	int n;
+        scanf("%d",&n);
+        char* str1=(char*)malloc(100000);
+        char* str2=(char*)malloc(100000);
+    	for(int i=0;i<n;i++){
+       	    scanf("%s",str1);
+    	    scanf("%s",str2);
+            printf("%s\n",Find(str1,str2));
+    	}
+        return 0;
+    }
+    char* Find(char* str1,char* str2){
+    	if(strlen(str1)==0)
+    		return str2;
+    	if(strlen(str2)==0)
+    		return str1;
+    	char* fst=(char*)malloc(200000);
+        int g=0;
+        strcat(str1,"Z");
+        strcat(str2,"Z");
+        int i=0,s=0;
+	while(i<strlen(str1) && s<strlen(str2)){
+		char c1=str1[i];
+		char c2=str2[s];
+		if(c1<c2)
+		    fst[g++]=str1[i++];
+		else if(c1>c2)
+		    fst[g++]=str2[s++];
+		else{
+		    int k=s,j=i;
+		    while(1){
+		    	if(str1[j]!=str2[k]){
+		    		if(str1[j]<str2[k]){
+                            for(int a=i;a<=j;a++)
+		    				    fst[g++]=str1[a];
+                            i=j+1; 
+	 	    		        break;
+		    		}
+		    		else if(str1[j]>str2[k]){
+		    			for(int a=s;a<=k;a++)
+		    				fst[g++]=str2[a];
+                        s=k+1;
+		    			break;
+		    		}
+		        }
+		        j++;
+		        k++;
+		        if(j==strlen(str1)){
+		    		fst[g++]=str2[s++];
+		    		break;    		    			
+		    	}
+		    	else if(k==strlen(str2)){
+		    		fst[g++]=str1[i++];
+		    		break;
+		    	}
+		    			
+		   }
+       		}
+	}
+	if(i==strlen(str1)){
+		while(s<strlen(str2))
+			fst[g++]=str2[s++];
+	}
+	if(s==strlen(str2)){
+		while(i<strlen(str1))
+			fst[g++]=str1[i++];
+	}
+        fst[g]='\0';
+        fst[strlen(fst)-2]='\0'; 
+    	return fst;
+    }
